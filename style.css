@@ -135,3 +135,7 @@ body.warm-room{--paper:#f5f0e3;--ink:#3d4234;--line:#ded7c4;background:var(--pap
 @media(prefers-reduced-motion:reduce){.curtain,.tree-shadow{animation:none!important}}
 /* Keep the lamp glow inside narrow phone viewports. */
 @media(max-width:760px){.lamp:before{inset:8% -12% -20%}}
+
+/* Straight lintel and level curtain heading, per the latest design correction. */
+.window-sky{inset:5% 10% 10%;border-radius:0}
+.curtain{top:3%;height:92%}
