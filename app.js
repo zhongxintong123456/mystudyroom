@@ -30,11 +30,12 @@ function bookSide(index,side){
  if(side==='left')return `<span class="notebook-left"><small>${m[0]}</small><span>${m[1]}</span></span>`;
  return `<div class="book-caption"><small>${index===0?'本周第一节':c.code}</small><strong>${index===0?'认识 Python':c.name}</strong><p class="book-summary">${m[2]}</p><a href="${index===0?'#read/python':'#course/'+c.id}">${index===0?'开始阅读':'翻开导读'} <b aria-hidden="true">↗</b></a></div>`;
 }
-function learningBook(){return `<section class="open-book" aria-label="可翻页的学习导读书"><svg class="book-masks" aria-hidden="true"><defs><clipPath id="paper-outline-right" clipPathUnits="objectBoundingBox"><path d="M0 .12 C.18 .04 .55 .005 .91 .025 Q.97 .025 .98 .09 L.995 .84 Q1 .91 .94 .92 C.63 .925 .21 .88 0 1 Z"/></clipPath><clipPath id="paper-outline-left" clipPathUnits="objectBoundingBox"><path d="M1 .12 C.82 .04 .45 .005 .09 .025 Q.03 .025 .02 .09 L.005 .84 Q0 .91 .06 .92 C.37 .925 .79 .88 1 1 Z"/></clipPath></defs></svg>${slice('reading-notebook',1536,12,100,1515,855)}<div data-book-left>${bookSide(bookPage,'left')}</div><div data-book-right>${bookSide(bookPage,'right')}</div><button class="book-turn book-turn-prev" data-book-turn="-1" aria-label="上一页" ${bookPage===0?'disabled':''}><span aria-hidden="true">‹</span></button><button class="book-turn book-turn-next" data-book-turn="1" aria-label="下一页" ${bookPage===courses.length-1?'disabled':''}><span aria-hidden="true">›</span></button><span class="book-pagination" role="status" aria-live="polite">${bookPage+1} / ${courses.length}</span><span class="book-turn-hint">轻点页角，翻一翻</span></section>`;}
+function learningBook(){return `<section class="open-book" aria-label="可翻页的学习导读书">${slice('reading-notebook',1536,12,100,1515,855)}<div data-book-left>${bookSide(bookPage,'left')}</div><div data-book-right>${bookSide(bookPage,'right')}</div><button class="book-turn book-turn-prev" data-book-turn="-1" aria-label="上一页" ${bookPage===0?'disabled':''}><span aria-hidden="true">‹</span></button><button class="book-turn book-turn-next" data-book-turn="1" aria-label="下一页" ${bookPage===courses.length-1?'disabled':''}><span aria-hidden="true">›</span></button><span class="book-pagination" role="status" aria-live="polite">${bookPage+1} / ${courses.length}</span><span class="book-turn-hint">轻点页角，翻一翻</span></section>`;}
 function turnBook(direction,trigger){
  const restoreFocus=document.activeElement===trigger;
  const book=document.querySelector('.open-book'),previous=bookPage,next=previous+direction;
  if(!book||bookTurning||next<0||next>=courses.length)return;
+ if(window.gsap){const art=book.querySelectorAll('.art-slice,.book-caption,.notebook-left');gsap.killTweensOf(art);gsap.set(art,{clearProps:'transform,opacity,visibility'});}
  bookTurning=true;bookPage=next;book.classList.add('is-turning');
  book.querySelectorAll('[data-book-turn]').forEach(b=>b.disabled=true);
  const finish=()=>{
@@ -49,24 +50,12 @@ function turnBook(direction,trigger){
   if(restoreFocus&&(document.activeElement===document.body||document.activeElement===trigger)){const focusTarget=trigger.disabled?book.querySelector(`[data-book-turn="${-direction}"]`):trigger;focusTarget?.focus({preventScroll:true});}
  };
  if(!window.gsap||matchMedia('(prefers-reduced-motion: reduce)').matches){finish();return;}
- const forward=direction>0,leaf=document.createElement('div');
- leaf.className='flip-leaf '+(forward?'leaf-forward':'leaf-backward');leaf.setAttribute('aria-hidden','true');leaf.setAttribute('inert','');
- const count=12,frontSide=forward?'right':'left',backSide=forward?'left':'right';
- let parent=leaf;
- for(let i=0;i<count;i++){
-  const joint=document.createElement('div');joint.className='paper-joint';
-  const frontIndex=forward?i:count-1-i,backIndex=count-1-frontIndex;
-  joint.innerHTML=`<div class="strip-surface strip-front"><div class="turn-face page-${frontSide}" style="left:${-frontIndex*100}%">${bookSide(previous,frontSide)}</div></div><div class="strip-surface strip-back"><div class="turn-face page-${backSide}" style="left:${-backIndex*100}%">${bookSide(next,backSide)}</div></div>`;
-  parent.append(joint);parent=joint;
- }
+ const forward=direction>0,curl=window.studyPaperCurl?.create(book,{forward,frontMarkup:bookSide(previous,forward?'right':'left'),backMarkup:bookSide(next,forward?'left':'right')});
+ if(!curl){finish();return;}
  book.querySelector(forward?'[data-book-right]':'[data-book-left]').innerHTML=bookSide(next,forward?'right':'left');
- book.append(leaf);
- const joints=[...leaf.querySelectorAll('.paper-joint')],progress={value:0},sign=forward?-1:1;
- flipTween=gsap.to(progress,{value:1,duration:1.3,ease:'power2.inOut',onUpdate:()=>{
-  const t=progress.value,curl=Math.sin(Math.PI*t);
-  leaf.style.transform=`rotateY(${sign*180*t}deg)`;
-  joints.forEach((joint,i)=>{joint.style.transform=`rotateY(${sign*curl*5*Math.pow(i/(count-1),.8)}deg)`;joint.style.setProperty('--paper-shade',String(1-curl*.035*i/count));});
- },onComplete:finish});
+ book.append(curl.element);curl.draw(0);
+ const progress={value:0};
+ flipTween=gsap.to(progress,{value:1,duration:1.45,ease:'sine.inOut',onUpdate:()=>curl.draw(progress.value),onComplete:finish});
 }
 function home(){
 return `<section class="home-scene ${state.motionPaused?'is-still':''}" aria-labelledby="home-title">
