@@ -142,3 +142,40 @@ body.warm-room{--paper:#f5f0e3;--ink:#3d4234;--line:#ded7c4;background:var(--pap
 
 .garden-view{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;user-select:none}
 .window-sky .tree-shadow{opacity:.06}
+
+/* The window words drift together, softly, without changing their legibility. */
+.window-copy{animation:window-words 9s ease-in-out infinite;will-change:transform}
+@keyframes window-words{0%,100%{transform:translate3d(0,0,0)}45%{transform:translate3d(.8px,-2.5px,0)}75%{transform:translate3d(-.4px,-1px,0)}}
+.is-still .window-copy{animation-play-state:paused}
+/* A real two-sided leaf pivots around the centre of the illustrated book. */
+.open-book{perspective:1200px;transform-style:preserve-3d;cursor:default}
+.open-book.is-turning{animation-play-state:paused}
+.open-book .book-caption{top:19%}.book-caption strong{margin-top:8px}
+.book-summary{font:12px/1.7 var(--serif);color:#7c7d6c;margin-top:11px;max-width:95%}
+.book-caption a{display:inline-block;font:12px var(--sans);margin-top:14px;padding:5px 0;border-bottom:1px solid #9da48b77;color:#526d58;white-space:nowrap}
+.book-caption a:hover{color:#284d3e;border-color:#526d58}.book-caption a b{font-weight:400;margin-left:10px}
+.book-turn{position:absolute;bottom:18%;width:44px;height:44px;padding:0;border:0;background:transparent;color:#7b8469;font:29px Georgia,serif;z-index:7;transition:color .2s,background .2s;transform:rotate(3deg);border-radius:50%}
+.book-turn-prev{left:8%}.book-turn-next{right:7%}.book-turn:hover:not(:disabled){background:#ded5b445;color:#355444}.book-turn:disabled{opacity:.2;cursor:default}
+.book-turn-next:after{content:"";position:absolute;right:6px;bottom:5px;width:15px;height:18px;background:linear-gradient(135deg,#fff6e4,#d5c6a967);clip-path:polygon(100% 0,100% 100%,0 100%);opacity:.5;transition:transform .2s}
+.book-turn-next:hover:not(:disabled):after{transform:translate(-2px,-2px)}
+.book-pagination{position:absolute;bottom:13%;left:45%;width:12%;text-align:center;font:italic 10px Georgia,serif;color:#928d78;transform:rotate(3deg)}
+.book-turn-hint{position:absolute;top:97%;left:36%;width:40%;text-align:center;font:11px var(--serif);color:#939582;transform:rotate(3deg)}
+.flip-leaf{position:absolute;top:10%;width:42%;height:73%;z-index:6;transform-style:preserve-3d;pointer-events:none;will-change:transform}
+.leaf-forward{left:50%;transform-origin:left center}.leaf-backward{left:8%;transform-origin:right center}
+.turn-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background-color:#f5ead3;background-image:linear-gradient(90deg,#c6b29255,transparent 15%,#fff4df55 75%,#dac5a650),url('assets/reading-notebook.png');background-size:100% 100%,240% 142%;background-position:center,88% 43%;box-shadow:2px 2px 4px #5d4a2c22;border:1px solid #e5d4b6;border-radius:3% 7% 8% 3%;overflow:hidden}
+.turn-back{transform:rotateY(180deg);background-position:center,19% 43%;border-radius:7% 3% 3% 8%;box-shadow:-2px 2px 5px #5d4a2c22}
+.turn-face:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#88705222,transparent 25%,transparent 80%,#a48c6815)}
+.turn-face .book-caption{left:9%;top:12%;width:80%;padding:0;transform:rotate(3deg)}
+.turn-face .notebook-left{left:12%;top:15%;width:75%;transform:rotate(3deg)}
+.turn-face .book-caption strong{font-size:25px}.turn-face .book-summary{font-size:12px}
+.is-turning [data-book-left],.is-turning [data-book-right]{pointer-events:none}
+@media(max-width:1100px){.book-summary{font-size:11px;margin-top:8px}.book-caption a{font-size:11px;margin-top:9px}.turn-face .book-caption strong{font-size:21px}.turn-face .book-summary{font-size:11px}}
+@media(max-width:760px){.open-book .book-caption{top:18%}.book-caption strong{margin-top:5px}.book-summary{font-size:10px;line-height:1.5;margin-top:6px}.book-caption a{font-size:10px;margin-top:6px}.book-turn{bottom:14%;width:44px;height:44px;font-size:25px}.book-turn-prev{left:5%}.book-turn-next{right:4%}.book-pagination{bottom:11%;font-size:9px}.book-turn-hint{font-size:10px;top:101%}.turn-face .book-caption strong{font-size:18px}.turn-face .book-summary{font-size:10px}.turn-face .book-caption{top:10%}}
+@media(max-width:430px){.book-summary{display:none}.book-caption a{margin-top:8px}.turn-face .book-caption strong{font-size:16px}.book-turn{bottom:12%}.book-turn-hint{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.window-copy{animation:none!important}.book-turn,.book-turn-next:after{transition:none}}
+/* Sample only blank paper grain, keeping painted covers and bookmarks off a turning leaf. */
+.turn-face{background-size:100% 100%,900% 650%;background-position:center,35% 45%}
+.turn-back{background-position:center,35% 45%}
+.book-pagination{left:67%;width:17%;bottom:12%}
+@media(max-width:760px){.book-pagination{left:63%;width:19%;bottom:10%}}
+@media(max-width:760px){.turn-face .notebook-left{left:8%;width:84%}.turn-face .notebook-left>span{letter-spacing:0;font-size:14px;line-height:1.7}}
