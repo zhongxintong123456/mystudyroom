@@ -1,13 +1,15 @@
 /* Paint the original illustrated sheet onto a moving cylindrical fold. */
 (() => {
- const outlines={right:'M0 .12 C.18 .04 .55 .005 .91 .025 Q.95 .025 .955 .09 L.96 .84 Q.965 .91 .94 .92 C.63 .925 .21 .88 0 1 Z',left:'M1 .12 C.82 .04 .45 .005 .09 .025 Q.05 .025 .045 .09 L.04 .84 Q.035 .91 .06 .92 C.37 .925 .79 .88 1 1 Z'};
+ // Raw illustration coordinates trace only the top paper face, excluding the cover,
+ // stacked page edges, gold binding and the ribbon below the spine.
+ const outlines={right:'M756 184 C850 109 1080 118 1347 149 Q1358 151 1364 178 L1440 726 Q1442 745 1415 744 C1160 740 870 700 756 775 Z',left:'M756 184 C650 109 360 112 169 137 Q154 140 148 171 L64 720 Q61 739 110 740 C340 742 617 681 756 775 Z'};
  function nodeText(node){return [...node.childNodes].map(n=>n.nodeType===3?n.textContent:n.nodeName==='BR'?'\n':nodeText(n)).join('');}
  function linesFor(ctx,text,width){const lines=[];for(const paragraph of text.split('\n')){let line='';for(const char of paragraph){if(line&&ctx.measureText(line+char).width>width){lines.push(line);line=char;}else line+=char;}lines.push(line);}return lines;}
  function texture(book,side,markup,image,w,h){
   const ratio=2,canvas=document.createElement('canvas');canvas.width=Math.ceil(w*ratio);canvas.height=Math.ceil(h*ratio);
   const ctx=canvas.getContext('2d');if(!ctx)return null;
-  ctx.scale(w*ratio,h*ratio);ctx.clip(new Path2D(outlines[side]));ctx.setTransform(ratio,0,0,ratio,0,0);
-  const fraction=side==='right'?.5:.05;
+  const fraction=side==='right'?.5:.05,sourceX=12+1515*fraction,scaleX=w/(1515*.45),scaleY=h/(855*.86);
+  ctx.setTransform(ratio*scaleX,0,0,ratio*scaleY,-sourceX*ratio*scaleX,-100*ratio*scaleY);ctx.clip(new Path2D(outlines[side]));ctx.setTransform(ratio,0,0,ratio,0,0);
   ctx.drawImage(image,12+1515*fraction,100,1515*.45,855*.86,0,0,w,h);
   const probe=document.createElement('div');probe.style.cssText='position:absolute;inset:0;visibility:hidden;pointer-events:none';probe.setAttribute('aria-hidden','true');probe.setAttribute('inert','');probe.innerHTML=markup;book.append(probe);
   const parent=probe.firstElementChild,cx=parent.offsetWidth/2,cy=parent.offsetHeight/2;

@@ -90,8 +90,7 @@ function initMotion(page){
   if(page==='home' && !homeArrived){
    homeArrived=true;
    const tl=gsap.timeline({defaults:{ease:'power2.out',duration:.65}});
-   tl.from('.open-book > .art-slice',{y:18,scale:.97,rotationX:8,transformOrigin:'center bottom',clearProps:'transform'},0)
-     .from('.mug > .art-slice,.glasses > .art-slice,.lamp > .art-slice',{y:14,opacity:0,stagger:.08,clearProps:'transform,opacity'},.12)
+   tl.from('.mug > .art-slice,.glasses > .art-slice,.lamp > .art-slice',{y:14,opacity:0,stagger:.08,clearProps:'transform,opacity'},.12)
      .from('.spine > .art-slice',{y:30,opacity:0,rotation:-4,stagger:.075,duration:.45,clearProps:'transform,opacity'},.3)
      .from('.book-caption,.notebook-left',{opacity:0,duration:.35,clearProps:'opacity'},.45);
   }else if(page==='read'){

@@ -198,3 +198,16 @@ body.warm-room{--paper:#f5f0e3;--ink:#3d4234;--line:#ded7c4;background:var(--pap
 @media(max-width:760px){.turn-face .book-caption{top:21%}.turn-face .notebook-left{top:24%}}
 /* One transparent canvas carries the original painted sheet through a continuous fold. */
 .paper-curl-canvas{position:absolute;inset:0;left:0;top:0;width:100%;height:100%;z-index:6;transform:none!important;pointer-events:none;will-change:auto}
+/* The cover, binding and ribbon rest on the desk; only the top paper turns. */
+.open-book,.open-book:hover{animation:none!important;transform:rotate(-3deg)}
+.guide-open{border:0;border-bottom:1px solid #a8ae96;background:none;font-size:11px;color:var(--green);margin-left:15px;padding:10px 0;min-height:44px}
+.study-guide{position:fixed;inset:0;margin:0;padding:0;width:100vw;height:100dvh;max-width:none;max-height:none;border:0;background:transparent;color:var(--ink);overflow:hidden}
+.study-guide::backdrop{background:transparent}
+.guide-spotlight{position:fixed;border:2px solid #c4c9af;border-radius:12px;box-shadow:0 0 0 200vmax #293b3390;pointer-events:none;transition:none}
+.guide-card{position:fixed;right:30px;bottom:26px;width:330px;padding:24px;background:#fffdf4;border:1px solid #d6d7bd;box-shadow:0 9px 40px #20352b26;isolation:isolate}
+.guide-card.card-at-top{top:24px;bottom:auto}
+.guide-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}.guide-count{font:italic 13px Georgia,serif;color:#7f866b}.guide-skip{border:0;background:none;font-size:11px;color:#7f866b;padding:10px 0;min-height:44px}
+.guide-card h2{font:24px/1.5 var(--serif);color:#3e5b49;outline:0;margin-bottom:12px}.guide-card p.guide-copy{font:14px/1.9 var(--serif);color:#676f5c;min-height:80px}.guide-actions{display:flex;justify-content:space-between;gap:14px;margin-top:22px}.guide-actions button{min-height:44px;padding:10px 16px;border:1px solid #8c9b7d;background:transparent;color:#526b48;font-size:12px}.guide-actions .guide-next{background:#486149;color:#fffdf3;border-color:#486149;margin-left:auto}.guide-actions button:disabled{opacity:.3;cursor:default}
+@media(max-width:760px){.guide-card{left:16px;right:16px;bottom:18px;width:auto;padding:20px}.guide-card.card-at-top{top:18px}.guide-card h2{font-size:22px}.guide-card p.guide-copy{font-size:13px;min-height:0}.guide-top{margin-bottom:8px}.guide-actions{margin-top:16px}.guide-spotlight{border-radius:8px}}
+@media(prefers-reduced-motion:reduce){.guide-spotlight{transition:none}}
+@media(min-width:761px){.guide-card.card-at-left{left:30px;right:auto}}
