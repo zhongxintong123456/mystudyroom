@@ -61,7 +61,7 @@ return `<section class="home-scene ${state.motionPaused?'is-still':''}" aria-lab
  </div>
  <div class="scene-object mug" aria-hidden="true">${slice('study-objects',1254,110,15,465,570)}<svg class="steam-trails" viewBox="0 0 100 100"><path d="M35 92 C19 71 54 57 35 34 S40 9 42 3"/><path d="M55 95 C77 73 40 57 57 33 S58 10 55 2"/><path d="M73 97 C55 79 86 65 72 44 S78 18 79 6"/></svg><span class="music-note note-one">♪</span><span class="music-note note-two">♫</span><span class="music-note note-three">♩</span></div>
  <div class="scene-object glasses" aria-hidden="true">${slice('study-objects',1254,640,115,600,405)}</div>
- <button class="scene-object lamp" data-lamp aria-label="切换书房暖光" aria-pressed="${state.lamp}">${slice('study-objects',1254,90,640,475,595)}<span class="lamp-caption">${state.lamp?'关掉暖光':'点亮书房'} <span aria-hidden="true">✧</span></span></button>
+ <button class="scene-object lamp" data-lamp aria-label="切换书房暖光" aria-pressed="${state.lamp}"><span class="lamp-facing">${slice('study-objects',1254,90,640,475,595)}</span><span class="lamp-caption">${state.lamp?'关掉暖光':'点亮书房'} <span aria-hidden="true">✧</span></span></button>
  ${learningBook()}
  <div class="course-shelf"><p class="shelf-title">选一本，慢慢读 <span aria-hidden="true">↘</span></p><div class="shelf-books">${courses.map(c=>`<a href="#course/${c.id}" class="spine ${c.color}" data-course="${c.id}" aria-label="打开${c.name}导读">${spine(c)}</a>`).join('')}</div><div class="wood-shelf"></div><a class="shelf-link" href="#library">查看全部课程 <span aria-hidden="true">→</span></a></div>
  <div class="notes-caption">随手记下，慢慢完成 <button data-reset-notes>整理便利贴 ↺</button></div>
@@ -83,7 +83,7 @@ function initMotion(page){
   if(page==='home' && !homeArrived){
    homeArrived=true;
    const tl=gsap.timeline({defaults:{ease:'power2.out',duration:.65}});
-   tl.from('.mug > .art-slice,.glasses > .art-slice,.lamp > .art-slice',{y:14,opacity:0,stagger:.08,clearProps:'transform,opacity'},.12)
+   tl.from('.mug > .art-slice,.glasses > .art-slice,.lamp-facing > .art-slice',{y:14,opacity:0,stagger:.08,clearProps:'transform,opacity'},.12)
      .from('.spine > .art-slice',{y:30,opacity:0,rotation:-4,stagger:.075,duration:.45,clearProps:'transform,opacity'},.3)
      .from('.book-caption,.notebook-left',{opacity:0,duration:.35,clearProps:'opacity'},.45);
   
