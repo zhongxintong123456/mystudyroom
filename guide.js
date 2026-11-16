@@ -5,7 +5,7 @@
   {target:'.open-book',title:'先翻一翻，再开始读',copy:'轻点右下页角 › 翻到下一页，左下页角 ‹ 往回翻。点纸面上的「查看课程」，进入课程介绍，再打开官方课程网站学习。'},
   {target:'.course-shelf',title:'选一本你想了解的书',copy:'这里有计算机视觉、大模型、机器人学和扩散模型四门课程。电脑上将鼠标移到书封会显示书名；手机直接轻点书封。课程导读里可以打开官方课程网站。'},
   {target:'.sticky-note',title:'把便利贴放在顺手的地方',copy:'按住便利贴上方拖动，就能自由移动、互相叠放。点「整理便利贴」可以恢复摆放，纸条上的链接可以打开课程。'},
-  {target:'[data-motion-toggle]',title:'按自己的节奏来',copy:'这里可以暂停持续动效，台灯可以切换暖光。课程资料在官方课程网站打开。便利贴位置保存在当前浏览器，手机与电脑分别记录。'}
+  {target:'[data-motion-toggle]',title:'按自己的节奏来',copy:'轻点窗台上的小鸟，可以暂停或恢复页面动效，台灯可以切换暖光。课程资料在官方课程网站打开。便利贴位置保存在当前浏览器，手机与电脑分别记录。'}
  ];
  const dialog=document.createElement('dialog');dialog.className='study-guide';dialog.setAttribute('aria-labelledby','guide-title');
  dialog.innerHTML='<div class="guide-spotlight" aria-hidden="true"></div><section class="guide-card"><div class="guide-top"><span class="guide-count" role="status"></span><button class="guide-skip" data-guide-close>暂时跳过</button></div><h2 id="guide-title" tabindex="-1"></h2><p class="guide-copy"></p><div class="guide-actions"><button data-guide-prev>上一步</button><button class="guide-next" data-guide-next>下一步 →</button></div></section>';

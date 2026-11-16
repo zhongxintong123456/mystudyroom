@@ -211,3 +211,16 @@ body.warm-room{--paper:#f5f0e3;--ink:#3d4234;--line:#ded7c4;background:var(--pap
 @media(max-width:760px){.guide-card{left:16px;right:16px;bottom:18px;width:auto;padding:20px}.guide-card.card-at-top{top:18px}.guide-card h2{font-size:22px}.guide-card p.guide-copy{font-size:13px;min-height:0}.guide-top{margin-bottom:8px}.guide-actions{margin-top:16px}.guide-spotlight{border-radius:8px}}
 @media(prefers-reduced-motion:reduce){.guide-spotlight{transition:none}}
 @media(min-width:761px){.guide-card.card-at-left{left:30px;right:auto}}
+
+.lamp > .art-slice{scale:-1 1}
+.window-bird{position:absolute;right:12%;bottom:38px;width:clamp(50px,12%,72px);min-height:44px;border:0;background:none;padding:0;z-index:5}
+.bird-shape{position:relative;display:block;transform-origin:35% 90%;animation:bird-peek 9s ease-in-out infinite}
+.bird-shape img{display:block;width:100%}
+.bird-shape i{position:absolute;left:18.3%;top:15.6%;width:3.6%;height:3.8%;background:#686056;border-radius:50%;border-bottom:1px solid #302d28;opacity:0;animation:bird-blink 7s infinite}
+@keyframes bird-peek{0%,80%,100%{transform:rotate(0)}88%{transform:rotate(-4deg)}}
+@keyframes bird-blink{0%,95%,99%,100%{opacity:0}97%{opacity:1}}
+.is-still .bird-shape,.is-still .bird-shape i{animation:none}.is-still .bird-shape i{opacity:1}
+.window-bird::after{content:attr(data-tip);position:absolute;bottom:100%;left:50%;translate:-50% 0;white-space:nowrap;background:#fffbee;color:#445b46;padding:4px 8px;font-size:11px;opacity:0;pointer-events:none}
+.window-bird:is(:hover,:focus-visible)::after{opacity:1}
+.scene-bottom{justify-content:flex-end}.footer>span:only-child{margin-left:0}
+@media(prefers-reduced-motion:reduce){.bird-shape,.bird-shape i{animation:none}}
