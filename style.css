@@ -212,7 +212,7 @@ body.warm-room{--paper:#f5f0e3;--ink:#3d4234;--line:#ded7c4;background:var(--pap
 @media(prefers-reduced-motion:reduce){.guide-spotlight{transition:none}}
 @media(min-width:761px){.guide-card.card-at-left{left:30px;right:auto}}
 
-.lamp > .art-slice{scale:-1 1}
+.lamp > .art-slice{scale:-1 1!important}
 .window-bird{position:absolute;right:12%;bottom:38px;width:clamp(50px,12%,72px);min-height:44px;border:0;background:none;padding:0;z-index:5}
 .bird-shape{position:relative;display:block;transform-origin:35% 90%;animation:bird-peek 9s ease-in-out infinite}
 .bird-shape img{display:block;width:100%}
